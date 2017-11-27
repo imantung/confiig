@@ -17,15 +17,21 @@ func (h AlwaysErrorHandler) GetValue(name string) (val string, err error) {
 	return
 }
 
-func TestRegister(t *testing.T) {
-	param := Register("TEST").Describe("TEST_DESCRIPTION").Default(999)
-	_, ok := paramMap["TEST"]
+func TestSharedConfig(t *testing.T) {
+	ifThenError(t, SharedConfig() != sharedConfig, "ShareConfig is retrieve share configurable")
+}
 
-	ifThenError(t, param.Name() != "TEST", "Name is not set")
+func TestRegister(t *testing.T) {
+	name := "TEST"
+	param := Register(name).Describe("TEST_DESCRIPTION").Default(999)
+
+	ifThenError(t, param.Name() != name, "Name is not set")
 	ifThenError(t, param.Description() != "TEST_DESCRIPTION", "Description is not set")
 	ifThenError(t, param.DefaultValue() != "999", "Default value is not set")
 	ifThenError(t, param.Mandatory(), "Default value is not set")
-	ifThenError(t, !ok, "Default value is not set")
+	ifThenError(t, !Exist(name), "TEST is exist")
+	ifThenError(t, Param(name) != param, "TEST param is same with param")
+
 }
 
 func TestGetTypo(t *testing.T) {

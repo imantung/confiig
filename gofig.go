@@ -1,38 +1,25 @@
 package gofig
 
-var paramMap = make(map[string]*Param)
+var sharedConfig = NewConfig()
 
-func Register(name string) *Param {
-	Param := &Param{
-		name:    name,
-		handler: NewEnvHandler(),
-	}
-	paramMap[name] = Param
-	return Param
+func Register(name string) (param *Parameter) {
+	param = sharedConfig.Register(name)
+	return
 }
 
 func Get(name string) (val GofigValue, gErr GofigError) {
-	param, ok := paramMap[name]
-	if !ok {
-		gErr = MissingParamError(name)
-		return
-	}
-
-	s, err := param.handler.GetValue(name)
-	if err != nil {
-		gErr = ConvertError(param, err)
-		return
-	}
-
-	if s == "" {
-		if param.Mandatory() {
-			gErr = NoValueError(param)
-			return
-		} else {
-			s = param.DefaultValue()
-		}
-	}
-
-	val = GofigValue(s)
+	val, gErr = sharedConfig.Get(name)
 	return
+}
+
+func Param(name string) *Parameter {
+	return sharedConfig.Param(name)
+}
+
+func Exist(name string) bool {
+	return sharedConfig.Exist(name)
+}
+
+func SharedConfig() *Config {
+	return sharedConfig
 }

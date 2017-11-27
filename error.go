@@ -3,29 +3,29 @@ package gofig
 import "fmt"
 
 type GofigError interface {
-	Param() *Param
+	Param() *Parameter
 	Error() string
 }
 
 type GenericGofigError struct {
-	param   *Param
+	param   *Parameter
 	message string
 }
 
 // NewParamError
-func NewError(param *Param, message string) GenericGofigError {
+func NewError(param *Parameter, message string) GenericGofigError {
 	return GenericGofigError{param: param, message: message}
 }
 
 // NewError
-func ConvertError(param *Param, err error) GenericGofigError {
+func ConvertError(param *Parameter, err error) GenericGofigError {
 	return NewError(param, err.Error())
 }
 
 // NoValueError
-func NoValueError(Param *Param) GenericGofigError {
-	msg := fmt.Sprintf("Can't retrieve value from %s", Param.Name())
-	return NewError(Param, msg)
+func NoValueError(param *Parameter) GenericGofigError {
+	msg := fmt.Sprintf("Can't retrieve value from %s", param.Name())
+	return NewError(param, msg)
 }
 
 // MissingParamError
@@ -34,7 +34,7 @@ func MissingParamError(name string) GenericGofigError {
 	return NewError(nil, msg)
 }
 
-func (e GenericGofigError) Param() *Param {
+func (e GenericGofigError) Param() *Parameter {
 	return e.param
 }
 
