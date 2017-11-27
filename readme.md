@@ -12,7 +12,7 @@ Register Function
 gofig.Register("name")
 gofig.Register("name").Describe("description").Default("default value")
 gofig.Register("name").Describe("description").Default(123)
-gofig.Register("name").Source(customSource)
+gofig.Register("name").Handler(customHandler)
 ```
 
 Get Function
