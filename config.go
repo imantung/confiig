@@ -40,21 +40,6 @@ func (c Config) Get(name string) (val GofigValue, gErr GofigError) {
 		return
 	}
 
-	s, err := param.handler.GetValue(name)
-	if err != nil {
-		gErr = ConvertError(param, err)
-		return
-	}
-
-	if s == "" {
-		if param.Mandatory() {
-			gErr = NoValueError(param)
-			return
-		} else {
-			s = param.DefaultValue()
-		}
-	}
-
-	val = GofigValue(s)
+	val, gErr = param.GetValue()
 	return
 }
