@@ -68,36 +68,41 @@ func TestEnvHandler(t *testing.T) {
 	Register("TEST_ENV")
 	os.Setenv("TEST_ENV", "test-value")
 
-	val, err := Get("TEST_ENV")
+	s, err := GetString("TEST_ENV")
 	ifThenError(t, err != nil, "expected error")
-	ifThenError(t, val != "test-value", "expected value is 'test-value'")
+	ifThenError(t, s != "test-value", "expected value is 'test-value'")
 }
 
 func TestGetInt(t *testing.T) {
 	Register("TEST_INT").Default(999)
 
-	val, err := Get("TEST_INT")
+	i, err := GetInt("TEST_INT")
 	ifThenError(t, err != nil, "err is nil")
-	ifThenError(t, val.AsInt() != 999, "val is int")
-	ifThenError(t, val.AsInt64() != 999, "val is int64")
-	ifThenError(t, val.AsUint64() != 999, "val is uint64")
+	ifThenError(t, i != 999, "val is int")
+
+	i64, err := GetInt64("TEST_INT")
+	ifThenError(t, err != nil, "err is nil")
+	ifThenError(t, i64 != int64(999), "val is int64")
+
+	ui64, err := GetUint64("TEST_INT")
+	ifThenError(t, err != nil, "err is nil")
+	ifThenError(t, ui64 != uint64(999), "val is uint64")
 }
 
 func TestGetBool(t *testing.T) {
 	Register("TEST_BOOL").Default(true)
 
-	val, err := Get("TEST_BOOL")
+	b, err := GetBool("TEST_BOOL")
 	ifThenError(t, err != nil, "err is nil")
-	ifThenError(t, val != "true", "val is not true")
-	ifThenError(t, val.AsBool() != true, "val is bool")
+	ifThenError(t, b != true, "val is bool")
 }
 
 func TestGetFloat(t *testing.T) {
 	Register("TEST_FLOAT").Default(3.14)
 
-	val, err := Get("TEST_FLOAT")
+	f64, err := GetFloat64("TEST_FLOAT")
 	ifThenError(t, err != nil, "err is nil")
-	ifThenError(t, val.AsFloat64() != 3.14, "val is bool")
+	ifThenError(t, f64 != 3.14, "val is bool")
 }
 
 func ifThenError(t *testing.T, condition bool, message string) {
