@@ -9,25 +9,27 @@ No one like to read documentation. We want a library that code example alone is 
 
 Register Function
 ```go
-gofig.Register("name").Describe("describe").Default("default value")
-gofig.Register("name").Describe("describe").Type(int).Default(123)
-gofig.Register("name").Describe("describe").Source(customSource)
+gofig.Register("name")
+gofig.Register("name").Describe("description").Default("default value")
+gofig.Register("name").Describe("description").Default(123)
+gofig.Register("name").Source(customSource)
 ```
 
 Get Function
 ```go
-val, err := config.Get("name")
-intVal, err := config.GetInt("name")
-val2 := config.GetOrDie("name")
+v, err := config.Get("name")
+i := val.AsInt()
+i, err = config.GetInt("name")
+
 ```
 
 ### Lazy
 
-Lazy is from lazy initialization. The value only retrieved until it's needed. 
+The value only retrieved until it's needed. 
 
 ### Singleton
 
-Singleton is characteristic of global access and only single instance. Hence this library is NOT for you:
+Global access and only single instance. Hence this library is NOT for you:
 
 - If you would like to keep your configuration as local variable 
 - If you would like having more than 1 configuration on your apps.
