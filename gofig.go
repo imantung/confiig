@@ -1,14 +1,17 @@
 package gofig
 
-var sharedConfig = NewConfig()
+var sharedConfig = NewEnvConfig()
 
-func Register(name string) (param *Parameter) {
-	param = sharedConfig.Register(name)
-	return
+func SetHandler(handler Handler) {
+	sharedConfig.SetHandler(handler)
 }
 
-func Get(name string) (val GofigValue, gErr GofigError) {
-	val, gErr = sharedConfig.Get(name)
+func Register(name string) *Parameter {
+	return sharedConfig.Register(name)
+}
+
+func Get(name string) (val GofigValue, err GofigError) {
+	val, err = sharedConfig.Get(name)
 	return
 }
 

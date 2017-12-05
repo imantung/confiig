@@ -18,7 +18,10 @@ func (h AlwaysErrorHandler) GetValue(name string) (val string, err error) {
 }
 
 func TestSharedConfig(t *testing.T) {
-	ifThenError(t, SharedConfig() != sharedConfig, "ShareConfig is retrieve share configurable")
+	handler := NewEnvHandler()
+	SetHandler(handler)
+	ifThenError(t, SharedConfig() != sharedConfig, "retrieve share configurable")
+	ifThenError(t, sharedConfig.Handler() != handler, "retrieve handler")
 }
 
 func TestRegister(t *testing.T) {
@@ -55,10 +58,12 @@ func TestGetNoDefaultAndNoSet(t *testing.T) {
 
 func TestCustomHandler(t *testing.T) {
 	handler := AlwaysErrorHandler{errorMessage: "some error message"}
-	param := Register("TEST_HANDLER").SetHandler(handler)
-	ifThenError(t, param.Handler() != handler, "message is not set")
+	config := NewConfig(handler)
+	config.Register("TEST_HANDLER")
 
-	val, err := Get("TEST_HANDLER")
+	ifThenError(t, config.Handler() != handler, "message is not set")
+
+	val, err := config.Get("TEST_HANDLER")
 	ifThenError(t, err == nil, "expected error")
 	ifThenError(t, val != "", "expected no value")
 	ifThenError(t, err.Error() != "some error message", "expect 'some error'")
@@ -113,7 +118,7 @@ func ifThenError(t *testing.T, condition bool, message string) {
 			message = fmt.Sprintf("%s:%d: %s", simpleFileName, no, message)
 		}
 
-		fmt.Println("%s", message)
+		fmt.Println(message)
 		t.Fail()
 	}
 }

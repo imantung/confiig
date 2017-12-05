@@ -6,11 +6,10 @@ type Parameter struct {
 	name         string
 	description  string
 	defaultValue interface{}
-	handler      Handler
 }
 
-func (p *Parameter) GetValue() (val GofigValue, gErr GofigError) {
-	str, err := p.handler.GetValue(p.name)
+func (p *Parameter) GetValue(handler Handler) (val GofigValue, gErr GofigError) {
+	str, err := handler.GetValue(p.name)
 	if err != nil {
 		gErr = ConvertError(p, err)
 		return
@@ -39,11 +38,6 @@ func (p *Parameter) Default(defaultValue interface{}) *Parameter {
 	return p
 }
 
-func (p *Parameter) SetHandler(handler Handler) *Parameter {
-	p.handler = handler
-	return p
-}
-
 func (p *Parameter) Mandatory() bool {
 	return p.defaultValue == nil
 }
@@ -58,8 +52,4 @@ func (p *Parameter) Description() string {
 
 func (g *Parameter) DefaultValue() string {
 	return fmt.Sprint(g.defaultValue)
-}
-
-func (g *Parameter) Handler() Handler {
-	return g.handler
 }
