@@ -1,4 +1,4 @@
-package gofig
+package confiig
 
 import "fmt"
 
@@ -8,7 +8,7 @@ type Parameter struct {
 	defaultValue interface{}
 }
 
-func (p *Parameter) GetValue(handler Handler) (val GofigValue, gErr GofigError) {
+func (p *Parameter) GetValue(handler Handler) (val Value, gErr GofigError) {
 	str, err := handler.GetValue(p.name)
 	if err != nil {
 		gErr = ConvertError(p, err)
@@ -24,7 +24,7 @@ func (p *Parameter) GetValue(handler Handler) (val GofigValue, gErr GofigError) 
 		}
 	}
 
-	val = GofigValue(str)
+	val = Value(str)
 	return
 }
 

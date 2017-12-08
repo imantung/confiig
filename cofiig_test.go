@@ -1,4 +1,4 @@
-package gofig
+package confiig
 
 import (
 	"fmt"

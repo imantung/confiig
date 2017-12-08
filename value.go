@@ -1,34 +1,34 @@
-package gofig
+package confiig
 
 import "strconv"
 
-type GofigValue string
+type Value string
 
-func (v GofigValue) AsString() string {
+func (v Value) AsString() string {
 	return string(v)
 }
 
-func (v GofigValue) AsInt() int {
+func (v Value) AsInt() int {
 	i, _ := strconv.Atoi(v.AsString())
 	return i
 }
 
-func (v GofigValue) AsBool() bool {
+func (v Value) AsBool() bool {
 	b, _ := strconv.ParseBool(v.AsString())
 	return b
 }
 
-func (v GofigValue) AsFloat64() float64 {
+func (v Value) AsFloat64() float64 {
 	f, _ := strconv.ParseFloat(v.AsString(), 64)
 	return f
 }
 
-func (v GofigValue) AsInt64() int64 {
+func (v Value) AsInt64() int64 {
 	i, _ := strconv.ParseInt(v.AsString(), 10, 64)
 	return i
 }
 
-func (v GofigValue) AsUint64() uint64 {
+func (v Value) AsUint64() uint64 {
 	u, _ := strconv.ParseUint(v.AsString(), 10, 64)
 	return u
 }

@@ -1,4 +1,4 @@
-package gofig
+package confiig
 
 var sharedConfig = NewEnvConfig()
 
@@ -10,7 +10,7 @@ func Register(name string) *Parameter {
 	return sharedConfig.Register(name)
 }
 
-func Get(name string) (val GofigValue, err GofigError) {
+func Get(name string) (val Value, err GofigError) {
 	val, err = sharedConfig.Get(name)
 	return
 }

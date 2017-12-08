@@ -1,8 +1,8 @@
-package gofig
+package confiig
 
 type Configurable interface {
 	Register(name string) *Parameter
-	Get(name string) (val GofigValue, gErr GofigError)
+	Get(name string) (val Value, gErr GofigError)
 }
 
 type Config struct {
@@ -40,7 +40,7 @@ func (c *Config) Exist(name string) bool {
 	return ok
 }
 
-func (c *Config) Get(name string) (val GofigValue, gErr GofigError) {
+func (c *Config) Get(name string) (val Value, gErr GofigError) {
 	param, ok := c.paramMap[name]
 	if !ok {
 		gErr = MissingParamError(name)
