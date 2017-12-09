@@ -8,16 +8,16 @@ type Parameter struct {
 	defaultValue interface{}
 }
 
-func (p *Parameter) GetValue(handler Handler) (val Value, gErr GofigError) {
-	str, err := handler.GetValue(p.name)
-	if err != nil {
-		gErr = ConvertError(p, err)
+func (p *Parameter) GetValue(handler Handler) (val Value, err Error) {
+	str, err0 := handler.GetValue(p.name)
+	if err0 != nil {
+		err = ConvertError(p, err0)
 		return
 	}
 
 	if str == "" {
 		if p.Mandatory() {
-			gErr = NoValueError(p)
+			err = NoValueError(p)
 			return
 		} else {
 			str = p.DefaultValue()

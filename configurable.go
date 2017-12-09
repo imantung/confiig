@@ -2,7 +2,7 @@ package confiig
 
 type Configurable interface {
 	Register(name string) *Parameter
-	Get(name string) (val Value, gErr GofigError)
+	Get(name string) (val Value, err Error)
 }
 
 type Config struct {
@@ -40,14 +40,14 @@ func (c *Config) Exist(name string) bool {
 	return ok
 }
 
-func (c *Config) Get(name string) (val Value, gErr GofigError) {
+func (c *Config) Get(name string) (val Value, err Error) {
 	param, ok := c.paramMap[name]
 	if !ok {
-		gErr = MissingParamError(name)
+		err = MissingParamError(name)
 		return
 	}
 
-	val, gErr = param.GetValue(c.handler)
+	val, err = param.GetValue(c.handler)
 	return
 }
 
