@@ -1,7 +1,6 @@
 # Confiig
 
-
-Confiig separates between accessor and how to actually get the value which is offer idiomatic and clean way to setup project configuration. It's possible to make your own implementation without changing the library itself.
+Confiig separates accessor with how to actually get the value which is offer idiomatic and clean way to setup golang project configuration. It's possible to make your own implementation without changing the library itself.
 
 By default it's using env variable as [12 factor apps](https://12factor.net/) suggestion. 
 
