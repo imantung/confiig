@@ -17,6 +17,7 @@ confiig.Register("name").Describe("description").Default(123)
 v, err := confiig.Get("name")
 i := val.AsInt()
 i, err = confiig.GetInt("name")
+s, _ := config.GetString("name")
 ```
 
 ### Handler
