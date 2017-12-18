@@ -9,7 +9,7 @@ type Parameter struct {
 }
 
 func (p *Parameter) GetValue(handler Handler) (val Value, err Error) {
-	str, err0 := handler.GetValue(p.name)
+	str, err0 := handler.Handle(p.name)
 	if err0 != nil {
 		err = ConvertError(p, err0)
 		return

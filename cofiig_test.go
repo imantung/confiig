@@ -8,15 +8,6 @@ import (
 	"testing"
 )
 
-type AlwaysErrorHandler struct {
-	errorMessage string
-}
-
-func (h AlwaysErrorHandler) GetValue(name string) (val string, err error) {
-	err = fmt.Errorf(h.errorMessage)
-	return
-}
-
 func TestSharedConfig(t *testing.T) {
 	handler := NewEnvHandler()
 	SetHandler(handler)
@@ -54,19 +45,6 @@ func TestGetNoDefaultAndNoSet(t *testing.T) {
 	ifThenError(t, err == nil, "expected error")
 	ifThenError(t, err.Error() != "Can't retrieve value from TEST_NO_DEFAULT", "expect 'Can't retrieve value from TEST_NO_DEFAULT'")
 	ifThenError(t, err.Param() != testNoDefault, "expect param is testNoDefault")
-}
-
-func TestCustomHandler(t *testing.T) {
-	handler := AlwaysErrorHandler{errorMessage: "some error message"}
-	config := NewConfig(handler)
-	config.Register("TEST_HANDLER")
-
-	ifThenError(t, config.Handler() != handler, "message is not set")
-
-	val, err := config.Get("TEST_HANDLER")
-	ifThenError(t, err == nil, "expected error")
-	ifThenError(t, val != "", "expected no value")
-	ifThenError(t, err.Error() != "some error message", "expect 'some error'")
 }
 
 func TestEnvHandler(t *testing.T) {
