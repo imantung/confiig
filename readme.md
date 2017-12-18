@@ -52,3 +52,14 @@ func init(){
   fmt.Println(host)
 }
 ```
+
+
+### As local variable
+
+```go
+conf := confiig.NewEnvConfig()
+conf.Register("host")
+
+s, _ := conf.GetString("host")
+fmt.Println(s)
+```
