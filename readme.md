@@ -53,7 +53,7 @@ func init(){
 ```
 
 
-### As local variable
+### As Variable
 
 ```go
 conf := confiig.NewEnvConfig()
@@ -62,3 +62,15 @@ conf.Register("host")
 s, _ := conf.GetString("host")
 fmt.Println(s)
 ```
+
+
+### Example
+
+[Redis Configuration](https://github.com/imantung/sample-confiig-redis)
+
+
+### TODO
+
+- Caching
+- Sample YAML Configuration
+- FAQ Section
